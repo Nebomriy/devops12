@@ -1,0 +1,14 @@
+
+[Unit]
+Description=Watch folder and process files
+
+[Service]
+Type=simple
+User=admint
+WorkingDirectory=/home/admint
+ExecStart=/home/admint/10_Watch_Service.sh
+Restart=always
+RestartSec=5 
+
+[Install]
+WantedBy=multi-user.target
