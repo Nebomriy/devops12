@@ -1,0 +1,13 @@
+
+# System files
+.DS_Store
+
+# Vagrant
+.vagrant/
+Vagrantfile
+
+# Logs
+*.log
+
+# Other temporary files
+
