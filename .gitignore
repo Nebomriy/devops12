@@ -4,7 +4,6 @@
 
 # Vagrant
 .vagrant/
-Vagrantfile
 
 # Logs
 *.log
