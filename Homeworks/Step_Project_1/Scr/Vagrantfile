@@ -1,0 +1,39 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64"
+
+  # DB_VM - MySQL server
+
+  config.vm.define "db_vm" do |db|
+    db.vm.hostname = "db-vm"
+    db.vm.network "private_network", ip: "192.168.56.10"
+
+    db.vm.provision "shell",
+      path: "provision_db.sh",
+      env: {
+        "DB_HOST" => ENV.fetch("DB_HOST", "192.168.56.10"),
+        "DB_PORT" => ENV.fetch("DB_PORT", "3306"),
+        "DB_NAME" => ENV.fetch("DB_NAME", "petclinic"),
+        "DB_USER" => ENV.fetch("DB_USER", "petuser"),
+        "DB_PASS" => ENV.fetch("DB_PASS", "petpass")
+      }
+  end
+
+  # APP_VM - PetClinic
+
+  config.vm.define "app_vm" do |app|
+    app.vm.hostname = "app-vm"
+    app.vm.network "private_network", ip: "192.168.56.11"
+    app.vm.network "forwarded_port", guest: 8080, host: 8080
+
+    app.vm.provision "shell",
+      path: "provision_app.sh",
+      env: {
+        "DB_HOST" => ENV.fetch("DB_HOST", "192.168.56.10"),
+        "DB_PORT" => ENV.fetch("DB_PORT", "3306"),
+        "DB_NAME" => ENV.fetch("DB_NAME", "petclinic"),
+        "DB_USER" => ENV.fetch("DB_USER", "petuser"),
+        "DB_PASS" => ENV.fetch("DB_PASS", "petpass")
+      }
+  end
+end
+
