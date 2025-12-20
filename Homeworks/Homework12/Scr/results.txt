@@ -1,0 +1,60 @@
+Test run: 2025-12-20 23:59:10.686208
+GET http://127.0.0.1:5001/students
+Status: 200
+Response:
+[]
+POST http://127.0.0.1:5001/students
+Request body:
+{"name": "Anna", "surname": "Ivanova", "age": 20}
+Status: 201
+Response:
+{"age": 20, "id": 1, "name": "Anna", "surname": "Ivanova"}
+POST http://127.0.0.1:5001/students
+Request body:
+{"name": "Bohdan", "surname": "Petrenko", "age": 21}
+Status: 201
+Response:
+{"age": 21, "id": 2, "name": "Bohdan", "surname": "Petrenko"}
+POST http://127.0.0.1:5001/students
+Request body:
+{"name": "Marta", "surname": "Koval", "age": 22}
+Status: 201
+Response:
+{"age": 22, "id": 3, "name": "Marta", "surname": "Koval"}
+GET http://127.0.0.1:5001/students
+Status: 200
+Response:
+[{"age": 20, "id": 1, "name": "Anna", "surname": "Ivanova"}, {"age": 21, "id": 2, "name": "Bohdan", "surname": "Petrenko"}, {"age": 22, "id": 3, "name": "Marta", "surname": "Koval"}]
+PATCH http://127.0.0.1:5001/students/2
+Request body:
+{"age": 25}
+Status: 200
+Response:
+{"age": 25, "id": 2, "name": "Bohdan", "surname": "Petrenko"}
+GET http://127.0.0.1:5001/students/2
+Status: 200
+Response:
+{"age": 25, "id": 2, "name": "Bohdan", "surname": "Petrenko"}
+PUT http://127.0.0.1:5001/students/3
+Request body:
+{"name": "Marta", "surname": "Kovalchuk", "age": 30}
+Status: 200
+Response:
+{"age": 30, "id": 3, "name": "Marta", "surname": "Kovalchuk"}
+GET http://127.0.0.1:5001/students/3
+Status: 200
+Response:
+{"age": 30, "id": 3, "name": "Marta", "surname": "Kovalchuk"}
+GET http://127.0.0.1:5001/students
+Status: 200
+Response:
+[{"age": 20, "id": 1, "name": "Anna", "surname": "Ivanova"}, {"age": 25, "id": 2, "name": "Bohdan", "surname": "Petrenko"}, {"age": 30, "id": 3, "name": "Marta", "surname": "Kovalchuk"}]
+DELETE http://127.0.0.1:5001/students/1
+Status: 200
+Response:
+{"message": "Student deleted"}
+GET http://127.0.0.1:5001/students
+Status: 200
+Response:
+[{"age": 25, "id": 2, "name": "Bohdan", "surname": "Petrenko"}, {"age": 30, "id": 3, "name": "Marta", "surname": "Kovalchuk"}]
+DONE
