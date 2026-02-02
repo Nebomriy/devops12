@@ -11,20 +11,22 @@ Vagrant.configure("2") do |config|
     end
 
     master.vm.provision "shell", inline: <<-SHELL
+      set -e
+
       apt-get update
-      apt-get install -y openjdk-17-jdk docker.io git curl
+      apt-get install -y ca-certificates curl gnupg lsb-release openjdk-17-jdk docker.io git wget
 
       systemctl enable docker
       systemctl start docker
 
       usermod -aG docker vagrant
 
-      curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io.key | tee \
-        /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+      # Jenkins repository (FIXED GPG KEY METHOD)
+      install -m 0755 -d /etc/apt/keyrings
+      wget -q -O /etc/apt/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key
+      chmod a+r /etc/apt/keyrings/jenkins-keyring.asc
 
-      echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
-        https://pkg.jenkins.io/debian-stable binary/ | tee \
-        /etc/apt/sources.list.d/jenkins.list > /dev/null
+      echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" > /etc/apt/sources.list.d/jenkins.list
 
       apt-get update
       apt-get install -y jenkins
@@ -46,6 +48,8 @@ Vagrant.configure("2") do |config|
     end
 
     worker.vm.provision "shell", inline: <<-SHELL
+      set -e
+
       apt-get update
       apt-get install -y openjdk-17-jdk docker.io git
 
