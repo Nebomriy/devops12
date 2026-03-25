@@ -1,12 +1,13 @@
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+.crash.log
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraform.lock.hcl
 
-# System files
 .DS_Store
-
-# Vagrant
-.vagrant/
-
-# Logs
-*.log
-
-# Other temporary files
-
+**/.DS_Store

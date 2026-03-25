@@ -1,0 +1,27 @@
+---
+- name: Setup Nginx reverse proxy for Jenkins
+  hosts: ins
+  become: true
+
+  tasks:
+
+    - name: Install nginx
+      ansible.builtin.dnf:
+        name: nginx
+        state: present
+
+    - name: Deploy nginx config
+      ansible.builtin.template:
+        src: ../templates/nginx-jenkins.conf.j2
+        dest: /etc/nginx/conf.d/jenkins.conf
+
+    - name: Remove default nginx config
+      ansible.builtin.file:
+        path: /etc/nginx/conf.d/default.conf
+        state: absent
+
+    - name: Enable and start nginx
+      ansible.builtin.systemd:
+        name: nginx
+        enabled: true
+        state: restarted
