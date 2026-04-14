@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hw24-python-random
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hw24-python-random
+  template:
+    metadata:
+      labels:
+        app: hw24-python-random
+    spec:
+      containers:
+        - name: hw24-python-random
+          image: seglianik/hw24-python-random:v1
+          ports:
+            - containerPort: 8082
