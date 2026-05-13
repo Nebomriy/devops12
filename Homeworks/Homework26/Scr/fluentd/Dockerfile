@@ -1,0 +1,1 @@
+FROM fluent/fluentd-kubernetes-daemonset:v1.16-debian-elasticsearch7-1
